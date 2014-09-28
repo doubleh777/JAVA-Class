@@ -11,7 +11,6 @@ import policy.FCFS;
 import policy.Policy;
 import policy.Priority;
 import policy.RoundRobin;
-import policy.SJF;
 
 public class TicketingMain {
 
@@ -25,13 +24,10 @@ public class TicketingMain {
 		ReadData readData = ReadData.getInstance("ClientData.csv"); //Data를 읽어오는 인스턴스 생성
 		readData.getClientData();  //Data를 파일로부터 읽어옴
 		Queue<Client> clientInfo = readData.getClientInfo(); // 고객정보를 담은 LinkedList를 반환
-		
 		System.out.println("어떤 방식으로 티켓팅을 하시겠습니까?");
 		System.out.println("1. FCFS");
 		System.out.println("2. RoundRobin");
-		System.out.println("3. Priority Queue");
-		System.out.println("4. SJF");
-		
+		System.out.println("3. PriorityQueue");
 		
 		while(true){
 			int input = scanner.nextInt();
@@ -40,7 +36,6 @@ public class TicketingMain {
 			case 1 : policy = new FCFS(clientInfo); break;
 			case 2 : policy = new RoundRobin(clientInfo); break;
 			case 3 : policy = new Priority(clientInfo); break;
-			case 4 : policy = new SJF(clientInfo); break;
 			default : System.out.println("유효하지 않는 입력입니다."); continue;	
 			}
 			break;
@@ -50,9 +45,12 @@ public class TicketingMain {
 		allocator = new Allocator(policy, numberOfBooth);
 		
 		
-		allocator.allocation();   // 정책에 따라 대기열에서 dequeue하여 Booth에 할당
-		allocator.trainDeparture();  // 3분에 한대씩 기차가 출발
+		allocator.allocation();   // 정책에 따라 대기열에서 dequeue하여 Booth에 할당하고 기차 대기열에 enqueue한 후 기차출발 시 dequeue
 		
+		Queue<Client> test = allocator.getMiddleClientInfo();
+		for(int i = 0 ; i<50 ; i++){
+		System.out.println(test.poll());
+		}
 		
 
 	}

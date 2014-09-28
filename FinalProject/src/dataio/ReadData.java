@@ -18,18 +18,19 @@ public class ReadData {
 	private BufferedReader br;          // Line단위로 handling하기 위한 Wrapper Class
 	private static String FileName;
 	private LinkedList<Client> ClientData;
-	private static ReadData readData = new ReadData(FileName);  //singleton pattern 
+	private static ReadData readData = new ReadData();  //singleton pattern 
 	
-	private ReadData (String FileName){
-		this.FileName = FileName;
+	private ReadData (){
 	}
 	
-	public static ReadData getInstance(String FileName){
-		if(readData == null) readData = new ReadData(FileName);
-		
+	public static ReadData getInstance(String fileName){
+		if(readData == null) readData = new ReadData();
+		setFileName(fileName);
 		return readData;
 	}
-	
+	public static void setFileName(String fileName){
+		FileName = fileName;
+	}
 	public void getClientData() throws IOException{
 		if(this.FileName != null){
 			fis = new FileInputStream(FileName);
@@ -39,8 +40,8 @@ public class ReadData {
 		
 			String line;
 			Client client = null;
+
 			while ((line = br.readLine()) != null){
-		
 				StringTokenizer st = new StringTokenizer(line, ",");  //StringTokenizer 클래스를 통해 "," 단위로 데이터 분할
 				client = new Client(Integer.parseInt(st.nextToken()), st.nextToken(), Integer.parseInt(st.nextToken()),
 												Integer.parseInt(st.nextToken()), st.nextToken(), st.nextToken());

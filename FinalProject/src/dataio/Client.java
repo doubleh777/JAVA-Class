@@ -1,6 +1,6 @@
 package dataio;
 
-public class Client {
+public class Client implements Comparable{
 	
 	private int iDNumber;
 	private String name;
@@ -8,9 +8,13 @@ public class Client {
 	private int ticketingTurnaroundTime;
 	private String departure;
 	private String destination;
+	private int trainDepartureTime;
+	private int trainArrivingTime;
+	private int endOfTicketingTime;
+	private int startOfTicketingTime;
+	
 	private int ticketingWaitingTime;
 	private int trainWaitingTime;
-	private int destinationArrivingTime;
 	
 	
 	public Client(int iDNumber, String name, int stationArrivingTime,
@@ -24,25 +28,35 @@ public class Client {
 		this.destination = destination;
 	}
 //출력시 계산되어 출력되어야 하는 정보에 대한 getter $ setter
-	public int getTicketingWaitingTime() {
-		return ticketingWaitingTime;
-	}
-	public void setTicketingWaitingTime(int ticketingWaitingTime) {
-		this.ticketingWaitingTime = ticketingWaitingTime;
-	}
-	public int getTrainWaitingTime() {
-		return trainWaitingTime;
-	}
-	public void setTrainWaitingTime(int trainWaitingTime) {
-		this.trainWaitingTime = trainWaitingTime;
-	}
+	
 	public int getDestinationArrivingTime() {
-		return destinationArrivingTime;
+		return trainArrivingTime;
 	}
-	public void setDestinationArrivingTime(int destinationArrivingTime) {
-		this.destinationArrivingTime = destinationArrivingTime;
+	public void setDestinationArrivingTime(int trainArrivingTime) {
+		this.trainArrivingTime = trainArrivingTime;
 	}
-
+	public int getTrainDepartureTime(){
+		return trainDepartureTime;
+	}
+	public void setTrainDepartureTime(int trainDepartureTime){
+		this.trainDepartureTime = trainDepartureTime;
+	}
+	public int getEndOfTicketingTime(){
+		return endOfTicketingTime;
+	}
+	public void setEndOfTicketingTime(int endOfTicketingTime){
+		this.endOfTicketingTime = endOfTicketingTime;
+	}
+	public void calculateWaitingTime(){
+		ticketingWaitingTime = endOfTicketingTime - startOfTicketingTime;
+		trainWaitingTime = trainDepartureTime - endOfTicketingTime;
+	}
+	public int getStartOfTicketingTime(){
+		return startOfTicketingTime;
+	}
+	public void setStartOfTicketingTime(int startOfTicketingTime){
+		this.startOfTicketingTime = startOfTicketingTime;
+	}
 	
 	//Data파일로 부터 읽어온 정보에 대한 getter
 	public int getiDNumber() {
@@ -62,6 +76,14 @@ public class Client {
 	}
 	public String getDestination() {
 		return destination;
+	}
+	
+	public String toString(){
+		return iDNumber+", "+name+", "+stationArrivingTime+", "+ ticketingTurnaroundTime+", "+ departure + ", " + destination;
+	}
+
+	public int compareTo(Object o) {
+		return this.getTicketingTurnaroundTime() - ((Client)o).getTicketingTurnaroundTime();
 	}
 
 	
