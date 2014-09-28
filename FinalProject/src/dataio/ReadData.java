@@ -34,7 +34,7 @@ public class ReadData {
 	public void getClientData() throws IOException{
 		if(this.FileName != null){
 			fis = new FileInputStream(FileName);
-			isr = new InputStreamReader(fis, "UTF-8");
+			isr = new InputStreamReader(fis);
 			br = new BufferedReader(isr);
 			ClientData = new LinkedList<Client>();
 		

@@ -12,6 +12,7 @@ public class Client implements Comparable{
 	private int trainArrivingTime;
 	private int endOfTicketingTime;
 	private int startOfTicketingTime;
+	private int trainTurnaroundTime;
 	
 	private int ticketingWaitingTime;
 	private int trainWaitingTime;
@@ -28,12 +29,14 @@ public class Client implements Comparable{
 		this.destination = destination;
 	}
 //출력시 계산되어 출력되어야 하는 정보에 대한 getter $ setter
-	
+	public int getTrainTurnaroundTime() {
+		return trainTurnaroundTime;
+	}
+	public void setTrainTurnaroundTime(int trainTurnaroundTime) {
+		this.trainTurnaroundTime = trainTurnaroundTime;
+	}
 	public int getDestinationArrivingTime() {
 		return trainArrivingTime;
-	}
-	public void setDestinationArrivingTime(int trainArrivingTime) {
-		this.trainArrivingTime = trainArrivingTime;
 	}
 	public int getTrainDepartureTime(){
 		return trainDepartureTime;
@@ -50,6 +53,8 @@ public class Client implements Comparable{
 	public void calculateWaitingTime(){
 		ticketingWaitingTime = endOfTicketingTime - startOfTicketingTime;
 		trainWaitingTime = trainDepartureTime - endOfTicketingTime;
+		trainArrivingTime = trainDepartureTime + trainTurnaroundTime;
+		
 	}
 	public int getStartOfTicketingTime(){
 		return startOfTicketingTime;
@@ -79,11 +84,15 @@ public class Client implements Comparable{
 	}
 	
 	public String toString(){
-		return iDNumber+", "+name+", "+stationArrivingTime+", "+ ticketingTurnaroundTime+", "+ departure + ", " + destination;
+		return iDNumber+", "+name+", "+stationArrivingTime+", "+ ticketingTurnaroundTime+", "+ departure + ", " + destination+", "+trainDepartureTime+", "+ticketingWaitingTime+", "+trainWaitingTime+", "+ trainArrivingTime;
 	}
 
 	public int compareTo(Object o) {
 		return this.getTicketingTurnaroundTime() - ((Client)o).getTicketingTurnaroundTime();
+	}
+
+	public String getInfo(){
+		return iDNumber+", "+name+", "+stationArrivingTime+", "+ ticketingTurnaroundTime+", "+ departure + ", " + destination+", "+trainDepartureTime+", "+ticketingWaitingTime+", "+trainWaitingTime+", "+ trainArrivingTime;
 	}
 
 	

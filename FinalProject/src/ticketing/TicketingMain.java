@@ -1,26 +1,31 @@
 package ticketing;
 
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.Iterator;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Scanner;
 
 import dataio.Client;
 import dataio.ReadData;
+import dataio.WriteData;
 import policy.FCFS;
 import policy.Policy;
 import policy.Priority;
 import policy.RoundRobin;
+import searchpath.Define;
+import searchpath.NoRegionException;
+import searchpath.ShortPath;
 
 public class TicketingMain {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, NoRegionException {
 		
 		Scanner scanner = new Scanner(System.in);
 		Policy policy;  // Client를 Booth에 할당하는 정책을 담기 위한 변수
 		Allocator allocator; // 정책에 따라 allocation하여 기차 대기열 큐에 enqueue시켜주고 기차가 출발하면
 									//	큐에 있는 모든 고객을 dequeue 시켜주는 역할을 하는 객체(policy manager) 
-		
+	
 		ReadData readData = ReadData.getInstance("ClientData.csv"); //Data를 읽어오는 인스턴스 생성
 		readData.getClientData();  //Data를 파일로부터 읽어옴
 		Queue<Client> clientInfo = readData.getClientInfo(); // 고객정보를 담은 LinkedList를 반환
@@ -47,11 +52,21 @@ public class TicketingMain {
 		
 		allocator.allocation();   // 정책에 따라 대기열에서 dequeue하여 Booth에 할당하고 기차 대기열에 enqueue한 후 기차출발 시 dequeue
 		
-		Queue<Client> test = allocator.getMiddleClientInfo();
-		for(int i = 0 ; i<50 ; i++){
-		System.out.println(test.poll());
+		Queue<Client> finalClientInfo = allocator.getfinalClientInfo();
+		Iterator<Client> iterator = finalClientInfo.iterator();
+		ShortPath searchPath = new ShortPath();
+		
+		while(iterator.hasNext()){
+			Client buffer = iterator.next();
+			String departure = buffer.getDeparture();
+			String destination = buffer.getDestination();
+
+			buffer.setTrainTurnaroundTime(searchPath.shortestPath(Define.parseString(departure), Define.parseString(destination), 7));
+			buffer.calculateWaitingTime();
 		}
 		
+		WriteData writeData = new WriteData("finalData.csv", finalClientInfo);
+		writeData.writeClientData();
 
 	}
 

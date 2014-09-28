@@ -14,7 +14,7 @@ public class Allocator {
 	int numberOfBooth;
 	ArrayList<TicketingBooth> Booth;
 	Queue<Client> trainQueue;
-	Queue<Client> middleClientInfo;  //다익스트라 알고리즘을 통한 도착시간을 제외한 다른 정보들을 모두 저장한 상태의 고객정보
+	Queue<Client> finalClientInfo;  //다익스트라 알고리즘을 통한 도착시간을 제외한 다른 정보들을 모두 저장한 상태의 고객정보
 	int curTime;
 	
 	public Allocator(Policy policy, int numberOfBooth){
@@ -23,7 +23,7 @@ public class Allocator {
 		this.curTime = 0;
 		
 		trainQueue = new LinkedList<Client>();
-		middleClientInfo = new LinkedList<Client>();
+		finalClientInfo = new LinkedList<Client>();
 		Booth = new ArrayList<TicketingBooth>(numberOfBooth);
 		makeBooth();
 	}
@@ -54,12 +54,12 @@ public class Allocator {
 		for(int i  = 0 ; i < trainQueue.size() ; i++){
 			Client buffer = trainQueue.poll();
 			buffer.setTrainDepartureTime(curTime);
-			middleClientInfo.offer(buffer);
+			finalClientInfo.offer(buffer);
 		}
 	}
 	
-	public Queue<Client> getMiddleClientInfo(){
-		return middleClientInfo;
+	public Queue<Client> getfinalClientInfo(){
+		return finalClientInfo;
 	}
 	
 }
