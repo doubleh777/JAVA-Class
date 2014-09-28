@@ -53,11 +53,11 @@ public class TicketingMain {
 		allocator.allocation();   // 정책에 따라 대기열에서 dequeue하여 Booth에 할당하고 기차 대기열에 enqueue한 후 기차출발 시 dequeue
 		
 		Queue<Client> finalClientInfo = allocator.getfinalClientInfo();
-		Iterator<Client> iterator = finalClientInfo.iterator();
+		Iterator<Client> finalClientInfoIR = finalClientInfo.iterator();
 		ShortPath searchPath = new ShortPath();
 		
-		while(iterator.hasNext()){
-			Client buffer = iterator.next();
+		while(finalClientInfoIR.hasNext()){
+			Client buffer = finalClientInfoIR.next();
 			String departure = buffer.getDeparture();
 			String destination = buffer.getDestination();
 
@@ -65,7 +65,23 @@ public class TicketingMain {
 			buffer.calculateWaitingTime();
 		}
 		
-		WriteData writeData = new WriteData("finalData.csv", finalClientInfo);
+		Iterator<Client> clientInfoIR = clientInfo.iterator();
+		
+		while(clientInfoIR.hasNext()){                               //원래의 clientInfo를 업데이트
+			finalClientInfoIR = finalClientInfo.iterator();
+			Client buffer1 = clientInfoIR.next();
+			while(finalClientInfoIR.hasNext()){
+				Client buffer2 = finalClientInfoIR.next();
+				if(buffer1.getiDNumber() == buffer2.getiDNumber()){
+					buffer1 = buffer2;
+				}
+			}
+			
+		}
+				
+				
+				
+		WriteData writeData = new WriteData("finalData.csv", clientInfo);
 		writeData.writeClientData();
 
 	}
