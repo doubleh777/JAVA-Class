@@ -8,7 +8,7 @@ import dataio.Client;
 
 public interface Policy {
 
-	public void dequeue();
+	public void stationArriving();
 	public void allocation();
 	
 	public void policyTemplate();

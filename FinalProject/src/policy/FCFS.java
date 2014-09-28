@@ -34,7 +34,7 @@ public class FCFS implements Policy{
 		this.curTime = curTime;	
 	}
 
-	public void dequeue() {
+	public void stationArriving() {
 		Iterator<Client> iterator = clientInfo.iterator();
 		
 		while(iterator.hasNext()){
@@ -63,7 +63,7 @@ public class FCFS implements Policy{
 				
 	
 	public void policyTemplate() {
-		dequeue();
+		stationArriving();
 		allocation();
 	}
 
