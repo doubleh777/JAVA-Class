@@ -12,8 +12,8 @@ public class Allocator {
 
 	Policy policy;
 	int numberOfBooth;
-	ArrayList<TicketingBooth> Booth;
-	Queue<Client> trainQueue;
+	ArrayList<TicketingBooth> Booth;  //티켓팅 부스
+	Queue<Client> trainQueue;	  //티켓팅을 한 후 기차를 기다리는 대기열
 	Queue<Client> finalClientInfo;  //다익스트라 알고리즘을 통한 도착시간을 제외한 다른 정보들을 모두 저장한 상태의 고객정보
 	int curTime;
 	

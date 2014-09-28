@@ -51,7 +51,7 @@ public class Client implements Comparable{
 		this.endOfTicketingTime = endOfTicketingTime;
 	}
 	public void calculateWaitingTime(){
-		ticketingWaitingTime = endOfTicketingTime - startOfTicketingTime;
+		ticketingWaitingTime = startOfTicketingTime - stationArrivingTime;
 		trainWaitingTime = trainDepartureTime - endOfTicketingTime;
 		trainArrivingTime = trainDepartureTime + trainTurnaroundTime;
 		

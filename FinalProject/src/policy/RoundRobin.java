@@ -46,13 +46,6 @@ public class RoundRobin implements Policy{
 		for(int i = 0 ; i< booth.size(); i++){
 			booth.get(i).curTime = curTime;  // 현재 시간으로 세팅
 			booth.get(i).enqueueToTrain();   // 부스에 자리를 비워주기 위해 티켓팅이 끝난 사람을 기차 대기열로 옮김
-		
-//			if(allocationNumber%booth.size() == i){
-//				if(booth.get(i).occupied == false && waitingRoom.peek() != null){
-//						booth.get(i).setCurClient(waitingRoom.poll());
-//						allocationNumber++;
-//				}else return;
-//			}
 		}
 		for(int i = 0 ; i < booth.size() ; i++){
 			if(allocationNumber%booth.size() == i){

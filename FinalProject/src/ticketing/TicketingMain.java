@@ -21,7 +21,7 @@ public class TicketingMain {
 
 	public static void main(String[] args) throws IOException, NoRegionException {
 		
-		Scanner scanner = new Scanner(System.in);
+		Scanner scanner = new Scanner(System.in); 
 		Policy policy;  // Client를 Booth에 할당하는 정책을 담기 위한 변수
 		Allocator allocator; // 정책에 따라 allocation하여 기차 대기열 큐에 enqueue시켜주고 기차가 출발하면
 									//	큐에 있는 모든 고객을 dequeue 시켜주는 역할을 하는 객체(policy manager) 
@@ -41,7 +41,7 @@ public class TicketingMain {
 			case 1 : policy = new FCFS(clientInfo); break;
 			case 2 : policy = new RoundRobin(clientInfo); break;
 			case 3 : policy = new Priority(clientInfo); break;
-			default : System.out.println("유효하지 않는 입력입니다."); continue;	
+			default : System.out.println("유효하지 않은 입력입니다."); continue;	
 			}
 			break;
 		}
@@ -60,15 +60,15 @@ public class TicketingMain {
 			Client buffer = finalClientInfoIR.next();
 			String departure = buffer.getDeparture();
 			String destination = buffer.getDestination();
-
+			//다익스트라 알고리즘을 통해 최단경로를 구하여 기차 소요시간을 저장
 			buffer.setTrainTurnaroundTime(searchPath.shortestPath(Define.parseString(departure), Define.parseString(destination), 7));
 			buffer.calculateWaitingTime();
 		}
 		
 		Iterator<Client> clientInfoIR = clientInfo.iterator();
-		
+																				//sorting하여 출력하기 위해
 		while(clientInfoIR.hasNext()){                               //원래의 clientInfo를 업데이트
-			finalClientInfoIR = finalClientInfo.iterator();
+			finalClientInfoIR = finalClientInfo.iterator();		
 			Client buffer1 = clientInfoIR.next();
 			while(finalClientInfoIR.hasNext()){
 				Client buffer2 = finalClientInfoIR.next();
